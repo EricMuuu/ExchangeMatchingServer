@@ -1,0 +1,22 @@
+version: '3.7'
+
+services:
+  db:
+    image: postgres:latest
+    environment:
+      POSTGRES_PASSWORD: passw0rd
+      POSTGRES_USER: postgres
+      POSTGRES_DB: exchange_server
+    restart: always
+
+  server:
+    build: ./server
+    user: root
+    volumes:
+      - ./server:/code
+    ports:
+      - "12345:12345"
+    expose:
+      - "12345"
+    depends_on:
+      - db

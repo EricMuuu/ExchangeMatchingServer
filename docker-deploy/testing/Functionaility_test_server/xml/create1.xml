@@ -1,0 +1,18 @@
+<create> 
+  <account id="1" balance="1000"/>
+  <account id="2" balance="1000"/>
+  <account id="3" balance="0"/>
+  <account id="5" balance="5000"/>
+  <symbol sym="IBM">
+    <account id="1">100</account>
+    <account id="2">200</account>
+    <account id="3">300</account>
+  </symbol>
+  <symbol sym="AAPL">
+    <account id="1">300</account>
+    <account id="2">200</account>
+    <account id="3">-100</account>
+    <account id="4">100</account>
+    <account id="5">200</account>
+  </symbol>
+</create>

@@ -1,0 +1,135 @@
+First request:
+<create> 
+  <account id="1" balance="1000"/>
+  <account id="2" balance="1000"/>
+  <account id="3" balance="0"/>
+  <account id="5" balance="5000"/>
+  <symbol sym="IBM">
+    <account id="1">100</account>
+    <account id="2">200</account>
+    <account id="3">300</account>
+  </symbol>
+  <symbol sym="AAPL">
+    <account id="1">300</account>
+    <account id="2">200</account>
+    <account id="3">-100</account>
+    <account id="4">100</account>
+    <account id="5">200</account>
+  </symbol>
+</create>
+
+First response: 
+Response received from server: <results>
+    <created id="1"/>
+    <created id="2"/>
+    <created id="3"/>
+    <created id="5"/>
+    <created sym="IBM" id="1"/>
+    <created sym="IBM" id="2"/>
+    <created sym="IBM" id="3"/>
+    <created sym="AAPL" id="1"/>
+    <created sym="AAPL" id="2"/>
+    <error sym="AAPL" id="3">Symbol cannot be created with negative number</error>
+    <error sym="AAPL" id="4">This account must exist before adding a symbol to it</error>
+    <created sym="AAPL" id="5"/>
+</results>
+
+Second request:
+<transactions id="1">
+  <order sym="IBM" amount="200" limit="1"/>
+  <query id="1"/>
+  <cancel id="1"/>
+  <order sym="AAPL" amount="300" limit="2"/>
+  <order sym="IBM" amount="-500" limit="1"/>
+  <order sym="AAPL" amount="-200" limit="1"/>
+  <order sym="TEST" amount="-100" limit="1"/>
+  <order sym="AAPL" amount="500" limit="5"/>
+  <query id="2"/>
+  <query id="3"/>
+</transactions>
+
+Second response:
+Response received from server: <results>
+    <opened sym="IBM" amount="200" limit="1.000000" id="1"/>
+    <status id="1">
+        <open shares="200"/>
+    </status>
+    <canceled id="1">
+        <canceled shares="200" time="2024-04-08 02:55:30.690953"/>
+    </canceled>
+    <opened sym="AAPL" amount="300" limit="2.000000" id="2"/>
+    <error sym="IBM" amount="-500" limit="1.000000">Insufficient shares</error>
+    <opened sym="AAPL" amount="-200" limit="1.000000" id="3"/>
+    <error sym="TEST" amount="-100" limit="1.000000">Insufficient shares</error>
+    <error sym="AAPL" amount="500" limit="5.000000">Insufficient balance</error>
+    <status id="2">
+        <open shares="300"/>
+    </status>
+    <status id="3">
+        <open shares="-200"/>
+    </status>
+</results>
+
+Third Request:
+<transactions id="2">
+  <order sym="AAPL" amount="100" limit="1"/>
+  <query id="4"/>
+  <order sym="AAPL" amount="-100" limit="3"/>
+  <query id="5"/>
+  <cancel id="5"/>
+  <query id="5"/>
+  <cancel id="1"/>
+  <cancel id="5"/>
+  <order sym="AAPL" amount="100" limit="2"/>
+</transactions>
+
+Third response:
+Response received from server: <results>
+    <opened sym="AAPL" amount="100" limit="1.000000" id="4"/>
+    <status id="4">
+        <executed shares="100" price="1.000000" time="2024-04-08 02:55:30.698322"/>
+    </status>
+    <opened sym="AAPL" amount="-100" limit="3.000000" id="5"/>
+    <status id="5">
+        <open shares="-100"/>
+    </status>
+    <canceled id="5">
+        <canceled shares="-100" time="2024-04-08 02:55:30.7004"/>
+    </canceled>
+    <status id="5">
+        <canceled shares="-100" time="2024-04-08 02:55:30.701876"/>
+    </status>
+    <error id="1">This is not your order</error>
+    <error id="5">This order has no open part to be canceled</error>
+    <opened sym="AAPL" amount="100" limit="2.000000" id="6"/>
+</results>
+
+Forth request:
+<transactions id="5">
+  <order sym="AAPL" amount="200" limit="5"/>
+  <query id="7"/>
+  <cancel id="7"/>
+  <query id="7"/>
+  <order sym="AAPL" amount="100" limit="2"/>
+  <order sym="AAPL" amount="-200" limit="1"/>
+  <query id="8"/>
+</transactions>
+
+Forth response:
+Response received from server: <results>
+    <opened sym="AAPL" amount="200" limit="5.000000" id="7"/>
+    <status id="7">
+        <open shares="200"/>
+    </status>
+    <canceled id="7">
+        <canceled shares="200" time="2024-04-08 02:55:30.707389"/>
+    </canceled>
+    <status id="7">
+        <canceled shares="200" time="2024-04-08 02:55:30.708476"/>
+    </status>
+    <opened sym="AAPL" amount="100" limit="2.000000" id="8"/>
+    <opened sym="AAPL" amount="-200" limit="1.000000" id="9"/>
+    <status id="8">
+        <open shares="100"/>
+    </status>
+</results>

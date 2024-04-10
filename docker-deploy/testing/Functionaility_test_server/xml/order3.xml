@@ -1,0 +1,9 @@
+<transactions id="5">
+  <order sym="AAPL" amount="200" limit="5"/>
+  <query id="7"/>
+  <cancel id="7"/>
+  <query id="7"/>
+  <order sym="AAPL" amount="100" limit="2"/>
+  <order sym="AAPL" amount="-200" limit="1"/>
+  <query id="8"/>
+</transactions>
